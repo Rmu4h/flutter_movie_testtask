@@ -15,7 +15,7 @@ class MovieState extends Equatable {
   final List<Movie> movies;
   final bool hasReachedMax;
 
-  //Ми реалізували copyWith, щоб ми могли скопіювати екземпляр MovieSuccess і зручно оновити нуль або більше властивостей
+  //We implemented copyWith so that we can copy an instance of PostSuccess and update zero or more properties conveniently
   MovieState copyWith({
     MovieStatus? status,
     List<Movie>? movies,

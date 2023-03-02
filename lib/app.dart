@@ -1,4 +1,3 @@
-
 import 'package:flutter/material.dart';
 
 import 'movies/view/movies_page.dart';

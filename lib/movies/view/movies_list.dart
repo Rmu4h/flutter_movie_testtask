@@ -41,12 +41,18 @@ class _MoviesListState extends State<MoviesList> {
           switch (state.status) {
             case MovieStatus.failure:
               return const Center(
-                child: Text('failed to fetch movies'),
+                child: Text(
+                  'failed to fetch movies',
+                  style: TextStyle(color: Colors.white),
+                ),
               );
             case MovieStatus.success:
               if (state.movies.isEmpty) {
                 return const Center(
-                  child: Text('no movies'),
+                  child: Text(
+                    'no movies',
+                    style: TextStyle(color: Colors.white),
+                  ),
                 );
               }
               return ListView.builder(

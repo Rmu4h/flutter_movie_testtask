@@ -12,7 +12,7 @@ import 'movie_event.dart';
 
 const throttleDuration = Duration(milliseconds: 100);
 
-EventTransformer<E> throttleDroppable<E>(Duration duration) { //хуйня з пекеджу bloc_concurrency дозволяє працювати з ember-concurrency
+EventTransformer<E> throttleDroppable<E>(Duration duration) {
   return (events, mapper) {
     return droppable<E>().call(events.throttle(duration), mapper);
   };
@@ -32,12 +32,9 @@ class MovieBloc extends Bloc<MovieEvent, MovieState>{
   Future<void> _onMovieFetched(MovieFetched event, Emitter<MovieState> emit) async {
     if(state.hasReachedMax) return;
     try{
-      print('${state.status} -зашло');
       if (state.status == MovieStatus.initial) {
-        print('тут працює1');
-
         final movies = await _fetchMovies();
-        print('тут працює');
+
         return emit(state.copyWith(
           status: MovieStatus.success,
           movies: movies,
@@ -45,15 +42,6 @@ class MovieBloc extends Bloc<MovieEvent, MovieState>{
         ));
       }
       final movies = await _fetchMovies(state.movies.length);
-       print('_onMovieFetched movies');
-      // emit(movies.isEmpty
-      //   ? state.copyWith(hasReachedMax: true)
-      //   : state.copyWith(
-      //     status: MovieStatus.success,
-      //     movies: List.of(state.movies)..addAll(movies),
-      //     hasReachedMax: false,
-      //   )
-      // );
 
       movies.isEmpty
           ? emit(state.copyWith(hasReachedMax: true))
@@ -65,24 +53,17 @@ class MovieBloc extends Bloc<MovieEvent, MovieState>{
         ),
       );
     } catch (_) {
-      print('catch work');
       emit(state.copyWith(status: MovieStatus.failure));
     }
   }
 
   Future<List<Movie>> _fetchMovies([int startIndex = 0]) async {
     final response = await httpClient.get(Uri.parse('https://api.themoviedb.org/3/movie/popular?api_key=bda761415e0345e74e087e4d72e7a7d2'));
-    print('$response - print response');
-    print(response.statusCode);
     if(response.statusCode == 200) {
-      print('тру');
       final body = json.decode(response.body)['results'] as List;
-
-      print('$body - print body');
 
       return body.map((dynamic json) {
         final map = json as Map<String, dynamic>;
-        print('$map - print map');
 
         return Movie(
           posterImage: 'https://image.tmdb.org/t/p/w500/' + map['backdrop_path'],
