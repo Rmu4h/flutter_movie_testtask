@@ -1,16 +1,15 @@
-# flutter_movie_testtask
+# Mobile application that shows movies for users
 
-A new Flutter project.
+What was implemented:
+1. Two screens, first is a list of popular movies. By clicking on the film, you can go to another screen with detailed information
+2. Show the user loading content
+3. Pagination
 
-## Getting Started
+Technology stack:
+1. DART
+2. FLUTTER
+3. State manager bloc
+4. http
+5. Google fonts
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+https://user-images.githubusercontent.com/51286978/222421521-1303bc35-9bd9-411e-bfce-e3a08d9e9f31.mp4
