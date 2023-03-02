@@ -1,4 +1,3 @@
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -16,13 +15,11 @@ class MoviesPage extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Center(
-            child: Text('Movies')
-        ),
-        backgroundColor: const Color(0xFF151135)
-      ),
+          title: const Center(child: Text('Movies')),
+          backgroundColor: const Color(0xFF151135)),
       body: BlocProvider(
-        create: (_) => MovieBloc(httpClient: http.Client())..add(MovieFetched()),
+        create: (_) =>
+            MovieBloc(httpClient: http.Client())..add(MovieFetched()),
         child: const MoviesList(),
       ),
     );

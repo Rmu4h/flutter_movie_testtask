@@ -1,5 +1,3 @@
-
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_movie_testtask/movies/bloc/movie_state.dart';
@@ -34,20 +32,22 @@ class _MoviesListState extends State<MoviesList> {
               begin: Alignment.topLeft,
               end: Alignment.bottomRight,
               colors: [
-                Color(0xFF1B1934),
-                Color(0xFF181A20),
-                Color(0xFF1B1934)
-              ]
-          )
-      ),
+            Color(0xFF1B1934),
+            Color(0xFF181A20),
+            Color(0xFF1B1934)
+          ])),
       child: BlocBuilder<MovieBloc, MovieState>(
         builder: (context, state) {
-          switch(state.status) {
+          switch (state.status) {
             case MovieStatus.failure:
-              return const Center(child: Text('failed to fetch movies'),);
+              return const Center(
+                child: Text('failed to fetch movies'),
+              );
             case MovieStatus.success:
-              if(state.movies.isEmpty) {
-                return const Center(child: Text('no movies'),);
+              if (state.movies.isEmpty) {
+                return const Center(
+                  child: Text('no movies'),
+                );
               }
               return ListView.builder(
                 itemBuilder: (BuildContext context, int index) {
@@ -61,7 +61,9 @@ class _MoviesListState extends State<MoviesList> {
                 controller: _scrollController,
               );
             case MovieStatus.initial:
-              return const Center(child: CircularProgressIndicator(),);
+              return const Center(
+                child: CircularProgressIndicator(),
+              );
           }
         },
       ),
@@ -71,8 +73,8 @@ class _MoviesListState extends State<MoviesList> {
   @override
   void dispose() {
     _scrollController
-        ..removeListener(_onScroll) //повторити в яких випадках юзати ..
-        ..dispose();
+      ..removeListener(_onScroll) //повторити в яких випадках юзати ..
+      ..dispose();
     super.dispose();
   }
 

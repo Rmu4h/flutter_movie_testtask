@@ -20,7 +20,7 @@ class MovieListItem extends StatelessWidget {
             shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(30)),
             leading: FadeInImage.assetNetwork(
-                placeholder: 'assets/image/loading.gif',
+                placeholder: 'assets/image/spinner.gif',
                 image: movie.posterImage,
                 fit: BoxFit.contain,
                 //   fit: BoxFit.cover,

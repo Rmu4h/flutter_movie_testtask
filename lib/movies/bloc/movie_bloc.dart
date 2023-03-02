@@ -10,7 +10,7 @@ import 'package:stream_transform/stream_transform.dart';
 import '../models/movie.dart';
 import 'movie_event.dart';
 
-const throttleDuration = Duration(milliseconds: 300);
+const throttleDuration = Duration(milliseconds: 100);
 
 EventTransformer<E> throttleDroppable<E>(Duration duration) { //хуйня з пекеджу bloc_concurrency дозволяє працювати з ember-concurrency
   return (events, mapper) {
@@ -32,9 +32,12 @@ class MovieBloc extends Bloc<MovieEvent, MovieState>{
   Future<void> _onMovieFetched(MovieFetched event, Emitter<MovieState> emit) async {
     if(state.hasReachedMax) return;
     try{
+      print('${state.status} -зашло');
       if (state.status == MovieStatus.initial) {
-        final movies = await _fetchMovies();
+        print('тут працює1');
 
+        final movies = await _fetchMovies();
+        print('тут працює');
         return emit(state.copyWith(
           status: MovieStatus.success,
           movies: movies,
@@ -70,8 +73,9 @@ class MovieBloc extends Bloc<MovieEvent, MovieState>{
   Future<List<Movie>> _fetchMovies([int startIndex = 0]) async {
     final response = await httpClient.get(Uri.parse('https://api.themoviedb.org/3/movie/popular?api_key=bda761415e0345e74e087e4d72e7a7d2'));
     print('$response - print response');
-
+    print(response.statusCode);
     if(response.statusCode == 200) {
+      print('тру');
       final body = json.decode(response.body)['results'] as List;
 
       print('$body - print body');
@@ -81,14 +85,14 @@ class MovieBloc extends Bloc<MovieEvent, MovieState>{
         print('$map - print map');
 
         return Movie(
-          id: map['id'] as int,
-          title: map['title'] as String,
-          overview: map['overview'] as String,
           posterImage: 'https://image.tmdb.org/t/p/w500/' + map['backdrop_path'],
-          voteAverage: map['vote_average'] as double,
-          voteCount: map['vote_count'] as int,
-          releaseDate: map['release_date'] as String,
+          id: map['id'] as int,
           originalLanguage: map['original_language'] as String,
+          overview: map['overview'] as String,
+          releaseDate: map['release_date'] as String,
+          title: map['title'] as String,
+          voteAverage: map['vote_average'],
+          voteCount: map['vote_count'] as int,
         );
       }).toList();
     }
